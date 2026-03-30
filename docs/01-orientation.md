@@ -1,6 +1,6 @@
 # Core Services:
 
-- ### service/frontend
+- ### service/fronten
 
 - ### service/history
 
@@ -37,6 +37,7 @@
 - worker
 
 #### Key subsystems
+
 - persistence
 - dynamic config
 - auth
@@ -67,52 +68,54 @@
 ### List directories you’ll ignore initially (SDKs, samples, UI, etc.)
 
 #### Code generation & templates
-  - **/*.tmpl
-  - **/generated/**
-   - **/*_generated.go
+
+- \*_/_.tmpl
+- **/generated/**
+- \*_/_\_generated.go
 - **/tools/** (codegen helpers)
 
 Why:
 These are inputs to code generation, not runtime logic. Including them hurts retrieval precision and adds noise.
 
-
 #### Build, CI, and repo plumbing
 
-  - .github/
-  - .buildkite/
-  - .circleci/
-  - Makefile
-  - go.mod, go.sum
-  - Dockerfile*
-  - .gitignore
+- .github/
+- .buildkite/
+- .circleci/
+- Makefile
+- go.mod, go.sum
+- Dockerfile\*
+- .gitignore
 
 Why:
 These don’t participate in workflow execution, routing, or persistence logic.
 
-
 #### Tests (for now)
 
 Ignore for Phase 1.
-  - **/*_test.go
-  - tests/
-  - testdata/
+
+- \*_/_\_test.go
+- tests/
+- testdata/
 
 Why:
 Tests are useful later for:
 
 #### validation
 
-  - evaluation
-  - edge cases
-But they obscure the main execution path during initial understanding.
-You’ll come back to them later if needed.
+- evaluation
+- edge cases
+  But they obscure the main execution path during initial understanding.
+  You’ll come back to them later if needed.
 
 #### SDKs and client libraries
+
 Ignore completely in Phase 1.
-  - client/
-  - sdk/
-  - common/sdk/ (if present)
-  - language-specific SDK folders
+
+- client/
+- sdk/
+- common/sdk/ (if present)
+- language-specific SDK folders
 
 Why:
 You are intentionally starting with server-side execution.
@@ -122,10 +125,10 @@ You already planned this — good instinct.
 
 #### UI, samples, and demos
 
-  - samples/
-  - ui/
-  - web/
-  - examples/
+- samples/
+- ui/
+- web/
+- examples/
 
 Why:
 These are consumers of the system, not part of the system.
@@ -136,4 +139,5 @@ These are consumers of the system, not part of the system.
 - What is the main workflow worker called in Temporal? In SWF, it is called the decider.
 
 ### Notes
+
 Architecture docs are used for cross-checking understanding; code is the primary source of truth.
