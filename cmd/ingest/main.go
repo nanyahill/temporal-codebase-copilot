@@ -64,14 +64,28 @@ func main() {
 			// The package name is right here!
 			packageName := node.Name.Name
 			fmt.Printf("Package: %s\n", packageName)
-			// Walk through the code "Tree"
-			ast.Inspect(node, func(n ast.Node) bool {
-				// Check: Is this node a Function Declaration?
-				if fn, ok := n.(*ast.FuncDecl); ok {
-					fmt.Printf("Function: %s\n", fn.Name.Name)
+			// Walk through the code top level detaisl of the file
+			for _, decl := range node.Decls {
+				if fn, ok := decl.(*ast.FuncDecl); ok {
+					if fn.Recv != nil {
+						for _, field := range fn.Recv.List {
+							switch t := field.Type.(type) {
+							case *ast.StarExpr:
+								if ident, ok := t.X.(*ast.Ident); ok {
+									fmt.Printf("Method: %s | Receiver: %v\n", fn.Name.Name, ident.Name)
+								}
+							case *ast.Ident:
+								fmt.Printf("Method: %s | Receiver: %s\n", fn.Name.Name, t.Name)
+							default:
+								fmt.Printf("Method: %s\n", fn.Name.Name)
+							}
+
+						}
+					} else {
+						fmt.Printf("Function: %s\n", fn.Name.Name)
+					}
 				}
-				return true // Continue inspecting the rest of the file
-			})
+			}
 			count++
 		}
 
